@@ -1,0 +1,55 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-align: center;
+    background-color: rgb(136, 101, 168);
+    color: antiquewhite;
+}
+
+.login-form {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    justify-content: center;
+    margin: 20px;
+}
+.log-form{
+    width: 70%;
+    position: absolute;
+    margin-top: 50px;
+    line-height: 40px;
+}
+input{
+    outline: none;
+    border: none;
+    background-color: antiquewhite;
+    color: black;
+    float: right;
+    border-radius: 15px;
+    width: 50%;
+    margin-right: 10%;
+    margin-top: 1%;
+    height: 4vh;
+
+
+}
+label{
+    float: left;
+    font-size: 18px;
+}
+#login-button{
+    width: 50%;
+    height: 5vh;
+    background-color: black;
+    color: antiquewhite;
+    font-size: large;
+    border-radius: 30px;
+    margin-right: -31%
+    /* float: inherit; */
+}
+#login-error{
+    position: absolute;
+    color: red;
+    top: 40%;
+}

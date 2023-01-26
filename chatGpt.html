@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatGPT</title>
+    <link rel="icon" type="image/png" href="/images/icon.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            text-align: center;
+            background-color: rgb(66, 34, 124);
+            color: antiquewhite;
+        }
+
+        input {
+            outline: none;
+            border: none;
+            background-color: antiquewhite;
+            color: black;
+            border-radius: 15px;
+            height: 30px;
+            width: 30%;
+        }
+
+        #image {
+            width: 30%;
+            /* position: absolute;
+            left: 8%;
+            top: 40%; */
+            border: none;
+            outline: none;
+            border-radius: 15px;
+        }
+
+        /* #answer {
+            position: absolute;
+            top: 35%;
+            left: 40%;
+        }
+        #result{
+            position: absolute;
+            top: 80%;
+            left: 40%;
+        } */
+    </style>
+</head>
+
+<body>
+    <Fieldset>
+    <div class="heading">
+        <h1>Your favourite and dream project chatGpt(but with more features)</h1>
+    </div>
+    <div class="chatgpt-page">
+        <form>
+            <label for="question">Enter your question:</label>
+            <input type="text" id="question" name="question">
+            <input type="submit" value="Submit">
+        </form>
+        <div id="answer"></div>
+        <img id="image">
+        <div id="speakText" style="display: none;">
+            <form id="speakForm">
+                <label for="token">Enter your token:</label>
+                <input type="text" id="token" name="token">
+                <input type="button" id="speakBtn" value="Speak">
+            </form>
+            <div id="result"></div>
+            <div id="callsRemaining">Calls remaining: 10</div>
+
+        </div>
+    </div>
+</fieldset>
+    <script>
+        var data = [{ question: "What is a dog", answer: "Dog is a animal with 4 legs", imageLink: "dog.jpg" }, { question: "What is a cat", answer: "Cat is a animal with 4 legs", imageLink: "cat.jpg" }, { question: "What is a bird", answer: "Bird is a animal that can fly", imageLink: "bird.jpg" }];
+        document.querySelector("form").addEventListener("submit", function (e) {
+            e.preventDefault();
+            var question = document.querySelector("#question").value;
+            for (var i = 0; i < data.length; i++) {
+                if (data[i].question === question) {
+                    document.querySelector("#answer").innerHTML = data[i].answer;
+                    document.querySelector("#image").src = data[i].imageLink;
+                    document.querySelector("#speakText").style.display = "block";
+                    break;
+                }
+            }
+        });
+        var user = JSON.parse(localStorage.getItem("userData"))[0];
+        var speakBtn = document.querySelector("#speakBtn");
+        let remainingCalls = 10;
+        const callsRemaining = document.querySelector("#callsRemaining");
+        speakBtn.addEventListener("click", function (event) {
+            event.preventDefault();
+            var token = document.querySelector("#token").value;
+            if (remainingCalls > 0 && (token === user.token)) {
+                const synth = window.speechSynthesis;
+                const speakText = new SpeechSynthesisUtterance(answer.textContent);
+                synth.speak(speakText);
+                remainingCalls--;
+                callsRemaining.textContent = `Calls remaining: ${remainingCalls}`;
+            } else {
+                if(remainingCalls<1)
+                callsRemaining.textContent = "You have reached the maximum number of calls.";
+            }
+            if (token === user.token) {
+                // if (user.callsRemaining > 0) {
+                    // user.callsRemaining--;
+                    localStorage.setItem("user", JSON.stringify(user));
+                    document.querySelector("#result").innerHTML = "Welcome " + user.name + "!";
+                    document.querySelector("#remainingCalls").innerHTML = "You have " + remainingCalls + " calls remaining.";
+                // } else {
+                //     document.querySelector("#result").innerHTML = "Sorry, you have reached the maximum number of calls.";
+                // }
+            } else {
+                document.querySelector("#result").innerHTML = "Invalid token. Please try again.";
+            }
+        });
+    </script>
+</body>
+
+</html>
